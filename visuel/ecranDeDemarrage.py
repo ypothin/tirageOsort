@@ -2,6 +2,7 @@
 import os
 import tkinter as tk
 from PIL import Image, ImageTk
+from widgets import BarreDeChargement
 
 class EcranDeDemarrage(tk.Toplevel):
     def __init__(self, parent, titre, texte, delai):
@@ -10,6 +11,7 @@ class EcranDeDemarrage(tk.Toplevel):
         self.title(titre)
         self.label = tk.Label(self, text=texte, font=("Helvetica", 18))
         self.label.pack(expand=True)
+        self.barre_de_chargement = BarreDeChargement(self)
         self.after(delai, self.destroy)
 
     def center_la_fenetre(self, largeur, hauteur):

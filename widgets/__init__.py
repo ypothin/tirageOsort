@@ -1,2 +1,3 @@
 from .boutonSelectionnerDossier import BoutonSelectionnerDossier
 from .boutonFaireLeTirage import BoutonFaireLeTirage
+from .barreDeChargement import BarreDeChargement
