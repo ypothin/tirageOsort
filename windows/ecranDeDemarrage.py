@@ -1,11 +1,14 @@
 
 import os
-import tkinter as tk
+from customtkinter import CTk
+from customtkinter import CTkLabel
+from customtkinter import CTkProgressBar
 from PIL import Image, ImageTk
-from widgets import BarreDeChargement
+from utils import Outils
+from widgets.barreDeChargement import BarreDeChargement
 
 
-class EcranDeDemarrage(tk.Tk):
+class EcranDeDemarrage(CTk):
 
     def __init__(self, titre, texte):
         super().__init__()
@@ -13,20 +16,19 @@ class EcranDeDemarrage(tk.Tk):
         self.title(titre)
         self.config(background="#FF6600")
         self.chemin_ressources = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir, 'ressources'))
-        self.center_la_fenetre(400, 400)
-        self.label = tk.Label(self, text=texte, font=("Helvetica", 18), bg="#FF6600", fg="white")
+        self.geometry(Outils.center_la_fenetre(self,400, 400))
+        self.label = CTkLabel(self, text=texte, font=("Helvetica", 18), fg_color='#FF6600', text_color='white')
         self.label.pack(expand=True)
         # label_image = Image.open(os.path.join(self.chemin_ressources, 'Hourglass.gif'))
         # self.image_loader = ImageTk.PhotoImage(label_image)
         # self.label_2 = tk.Label(self, image=self.image_loader, width=256, height=256, bg="#FF6600", fg="white")
         # self.label_2.pack(expand=True)
+        # self.barre_de_chargement = CTkProgressBar(self, width=300, height=15, mode='indeterminate', border_color='#FF6600')
         self.barre_de_chargement = BarreDeChargement(self)
-        #self.after(delai, self.destroy)
+
         self.overrideredirect(True)
         self.resizable(False, False)
-        #self.cacher_la_fenetre(delai)
         print("ecran de démarrage affichée")
-        # self.mainloop()
 
     def cacher_la_fenetre(self):
         self.withdraw()
@@ -38,15 +40,7 @@ class EcranDeDemarrage(tk.Tk):
         self.destroy()
         print("ecran de démarrage détruite")
 
-    def center_la_fenetre(self, largeur, hauteur):
-        # screen_width = self.winfo_screenwidth()
-        # screen_height = self.winfo_screenheight()
-        # position_x = (screen_width // 2) - (largeur // 2)
-        # position_y = (screen_height // 2) - (hauteur // 2)
-        # return f"{largeur}x{hauteur}+{position_x}+{position_y}"
-        position_x = (self.winfo_screenwidth() // 2) - (largeur // 2)
-        position_y = (self.winfo_screenheight() // 2) - (hauteur // 2)
-        self.geometry('{}x{}+{}+{}'.format(largeur, hauteur, position_x, position_y))
+    
     
     def fond_ecran_de_demarrage(self):
         # Chemin de l'image

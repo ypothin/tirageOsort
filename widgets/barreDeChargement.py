@@ -1,13 +1,10 @@
+from customtkinter import CTkProgressBar
 
-from tkinter.ttk import Progressbar
-
-class BarreDeChargement(Progressbar):
-    def __init__(self, parent, **kwargs):
-        super().__init__(parent, orient='horizontal',maximum=100, length=300, mode='indeterminate', **kwargs)
-        self.style = "black.Horizontal.TProgressbar"
-        self.pack(pady=20)
-        self.start(25)
-        #self.commencer_progression()
+class BarreDeChargement(CTkProgressBar):
+    def __init__(self, parent):
+        super().__init__(parent)
+        self.start()
+        self.pack(expand=True)
 
     def commencer_progression(self):
         self['value'] = 0
