@@ -4,16 +4,23 @@ import tkinter as tk
 from PIL import Image, ImageTk
 from widgets import BarreDeChargement
 
+
 class EcranDeDemarrage(tk.Tk):
+
     def __init__(self, titre, texte):
         super().__init__()
         # self.fond_ecran_de_demarrage()
         self.title(titre)
         self.config(background="#FF6600")
+        self.chemin_ressources = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir, 'ressources'))
         self.center_la_fenetre(400, 400)
         self.label = tk.Label(self, text=texte, font=("Helvetica", 18), bg="#FF6600", fg="white")
         self.label.pack(expand=True)
-        #self.barre_de_chargement = BarreDeChargement(self)
+        # label_image = Image.open(os.path.join(self.chemin_ressources, 'Hourglass.gif'))
+        # self.image_loader = ImageTk.PhotoImage(label_image)
+        # self.label_2 = tk.Label(self, image=self.image_loader, width=256, height=256, bg="#FF6600", fg="white")
+        # self.label_2.pack(expand=True)
+        self.barre_de_chargement = BarreDeChargement(self)
         #self.after(delai, self.destroy)
         self.overrideredirect(True)
         self.resizable(False, False)
@@ -23,6 +30,7 @@ class EcranDeDemarrage(tk.Tk):
 
     def cacher_la_fenetre(self):
         self.withdraw()
+        self.barre_de_chargement.stop()
         print("ecran de démarrage cachée")
         self.destruire_la_fenetre()
 
@@ -51,7 +59,6 @@ class EcranDeDemarrage(tk.Tk):
         # Création du canvas
         canvas = tk.Canvas(self, width=largeur_image, height=hauteur_image, bd=0, highlightthickness=0)
         canvas.pack()
-        canvas.create_image(0,0, image=self.fond_ecran, anchor=tk.NW)
         canvas.create_image(0,0, image=self.fond_ecran, anchor=tk.NW)
         
         # Centrage de la fenêtre

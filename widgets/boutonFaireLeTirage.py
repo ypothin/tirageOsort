@@ -35,14 +35,20 @@ class BoutonFaireLeTirage(CTkButton):
 
     def charger_le_choix_du_dossier(self):
         chemin_du_fichier = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir, 'choixDossier.json'))
-        if os.path.exists(chemin_du_fichier):
-            with open(chemin_du_fichier, 'r') as fichier_choix_dossier:
-                config = json.load(fichier_choix_dossier)
-                chemin_choisis = config.get('choix_dossier', '')
-                try:
-                    if chemin_choisis:
-                        return chemin_choisis
-                    else:
-                        raise ValueError("Veuillez d'abord sélectionner un dossier")
-                except Exception as e:
-                    messagebox.showerror("Erreur", e)
+        try:
+            if os.path.exists(chemin_du_fichier):
+                with open(chemin_du_fichier, 'r') as fichier_choix_dossier:
+                    config = json.load(fichier_choix_dossier)
+                    chemin_choisis = config.get('choix_dossier', '')
+                    try:
+                        if chemin_choisis:
+                            return chemin_choisis
+                        else:
+                            raise ValueError("Pas de chemin, veuillez reselectionner le dossier")
+                    except Exception as e:
+                        messagebox.showerror("Erreur", e)
+            else:
+                raise ValueError("Veuillez d'abord sélectionner un dossier")
+        except Exception as e:
+            messagebox.showerror("Erreur", e)
+            return None
