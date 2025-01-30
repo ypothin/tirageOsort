@@ -4,12 +4,15 @@ import random
 from tkinter import messagebox
 from customtkinter import CTkButton
 from PIL import Image
+from collections import defaultdict
 
 class BoutonFaireLeTirage(CTkButton):
+
+
     def __init__(self, parent, **kwargs):
         super().__init__(parent, text="Tirage au sort", command=self.faire_le_tirage, **kwargs)
         self.pack(padx=20, pady=20)
-        self.dossier_choisis = None
+        self.charger_le_choix_du_dossier()
 
     def faire_le_tirage(self):
         dossier = self.charger_le_choix_du_dossier()
@@ -20,7 +23,7 @@ class BoutonFaireLeTirage(CTkButton):
         # Liste tous les fichiers dans le dossier
         fichiers = os.listdir(dossier)
         # Filtre uniquement les fichiers qui sont des images (par exemple, jpg, png)
-        photos = [fichier for fichier in fichiers if fichier.endswith(('.jpg', '.jpeg', '.png', '.heic'))]
+        photos = [fichier for fichier in fichiers if fichier.lower().endswith(('.jpg', '.jpeg', '.png', '.heic'))]
         # Sélectionne aléatoirement le nombre de photos spécifié
         photos_tirees = random.sample(photos, nombre_de_photos)
         return photos_tirees
@@ -39,10 +42,10 @@ class BoutonFaireLeTirage(CTkButton):
             if os.path.exists(chemin_du_fichier):
                 with open(chemin_du_fichier, 'r') as fichier_choix_dossier:
                     config = json.load(fichier_choix_dossier)
-                    chemin_choisis = config.get('choix_dossier', '')
+                    self.chemin_choisis = config.get('choix_dossier', '')
                     try:
-                        if chemin_choisis:
-                            return chemin_choisis
+                        if self.chemin_choisis:
+                            return self.chemin_choisis
                         else:
                             raise ValueError("Pas de chemin, veuillez reselectionner le dossier")
                     except Exception as e:

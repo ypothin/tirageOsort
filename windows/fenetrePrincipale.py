@@ -15,5 +15,5 @@ class FenetrePrincipale(CTk):
         # ajout d'un bouton selectionner dossier
         self.bouton_selectionner_dossier = BoutonSelectionnerDossier(self)
         self.bouton_faire_le_tirage = BoutonFaireLeTirage(self)
-        self.mainloop()
+        # self.mainloop()
         

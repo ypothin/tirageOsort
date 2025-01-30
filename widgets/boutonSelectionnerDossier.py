@@ -2,6 +2,8 @@ import json
 import os
 from tkinter import filedialog, messagebox
 from customtkinter import CTkButton
+from customtkinter import CTkLabel
+from utils.outils import Outils
 
 class BoutonSelectionnerDossier(CTkButton):
     def __init__(self, parent, **kwargs):
@@ -12,9 +14,16 @@ class BoutonSelectionnerDossier(CTkButton):
     def selection_dossier(self):
         try:
             chemin_du_dossier = filedialog.askdirectory()
+
             if not chemin_du_dossier:
                 raise ValueError("Aucun dossier sélectionné")
+            
+            self.le_contenu_du_dossier = Outils.compter_et_classer_les_fichiers_du_dossiers(chemin_du_dossier)
+            print("Nombre de fichiers par type :")
+            for file_type, count in self.le_contenu_du_dossier.items():
+                print(f"{file_type}: {count}")
             self.sauvegarder_le_choix_du_dossier(chemin_du_dossier)
+
         except Exception as e:
             messagebox.showerror("Erreur", e)
     
